@@ -1,7 +1,11 @@
-from flask import render_template, redirect, request, url_for,flash
+from flask import render_template, redirect, request, url_for,flash, session
 from shop import db, app
 from .models import Brand, Category
+from .forms import AddproductsForm
 
+@app.route('/')
+def home():
+    return "Home Page"
 
 @app.route('/addbrand', methods = ['GET', 'POST'])
 def addbrand():
@@ -14,6 +18,7 @@ def addbrand():
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html', brands = 'brands')
 
+
 @app.route('/addcategory', methods = ['GET', 'POST'])
 def addcategory():
     if request.method == "POST":
@@ -25,3 +30,8 @@ def addcategory():
         flash(f"Category {getcategory} added to your database",'success')
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html')
+
+@app.route('/addproduct', methods = ['GET', 'POST'])
+def addproduct():
+    form = AddproductsForm(request.form)
+    return render_template('products/addproduct.html', title="Add Product", form = form)
