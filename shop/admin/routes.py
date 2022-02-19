@@ -6,8 +6,6 @@ from shop.products.models import Addproduct, Brand, Category
 
 @app.route('/admin')
 def admin():
-    if 'email' not in session:
-        return redirect(url_for('login'))
     products = Addproduct.query.all()
     return render_template('admin/index.html', title ='Admin Page', products= products)
 

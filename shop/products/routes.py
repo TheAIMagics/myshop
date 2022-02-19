@@ -80,3 +80,33 @@ def addproduct():
 
     return render_template('products/addproduct.html', title="Add Product", form = form,
                            brands = brands, categories = categories)
+
+@app.route('/updateproduct/<int:id>', methods = ['GET', 'POST'])
+def updateproduct(id):
+    brands = Brand.query.all()
+    categories = Category.query.all()
+    product = Addproduct.query.get_or_404(id)
+    print(product.price)
+    brand = request.form.get('brand')
+    category = request.form.get('category')
+    form = AddproductsForm(request.form)
+    if request.method == 'POST':
+        product.name = form.name.data
+        product.price = form.price.data
+        product.stock = form.stock.data
+        product.discount = form.discount.data
+        product.description = form.description.data
+        product.colors = form.colors.data
+        product.brand_id = brand
+        product.category_id = category
+        db.session.commit()
+        flash("Product has been updated successfully", 'success')
+        return redirect(url_for('admin'))
+    form.name.data = product.name
+    form.price.data = product.price
+    form.stock.data = product.stock
+    form.discount.data = product.discount
+    form.description.data = product.description
+    form.colors.data = product.colors
+    return render_template('products/updateproduct.html', title = 'Update Product', form = form,brands = brands, categories=categories,
+                           product = product)
