@@ -2,10 +2,25 @@ from flask import render_template, url_for, redirect, request, flash, session
 from shop import db, app, bcrypt
 from .forms import RegistrationForm, LoginForm
 from .models import User
+from shop.products.models import Addproduct, Brand, Category
 
 @app.route('/admin')
 def admin():
-    return render_template('admin/index.html', title ='Admin Page')
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    products = Addproduct.query.all()
+    return render_template('admin/index.html', title ='Admin Page', products= products)
+
+@app.route('/brands')
+def brands():
+    brands = Brand.query.order_by(Brand.id.desc()).all()
+    return render_template('admin/brand.html', title ='Brands Page', brands= brands)
+
+@app.route('/category')
+def category():
+    categories = Category.query.order_by(Category.id.desc()).all()
+    return render_template('admin/brand.html', title ='Brands Page', categories= categories)
+
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -15,7 +30,6 @@ def register():
         user = User(name = form.name.data, username = form.username.data,email= form.email.data, password = hashed_password)
         db.session.add(user)
         db.session.commit()
-        print(user)
         flash(f"{form.name.data} ! Registered successfully", 'success')
         return redirect(url_for('admin'))
     return render_template('admin/register.html', title = 'Register user', form = form)
@@ -25,9 +39,7 @@ def login():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         user = User.query.filter_by(email = form.email.data).first()
-        print(user)
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-
             session['email'] = form.email.data
             flash(f"Welcome {form.email.data} ! Logged In successfully", 'success')
             return redirect(request.args.get('next') or url_for('admin'))

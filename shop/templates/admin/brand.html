@@ -5,7 +5,7 @@
 
 <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand"  href="{{ url_for('admin') }}">Admin</a>
+      <a class="navbar-brand" href="{{ url_for('admin') }}">Admin</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -15,7 +15,7 @@
             <a class="nav-link" href="{{ url_for('brands') }}">Brands</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  href="{{ url_for('category') }}">Category</a>
+            <a class="nav-link" href="{{ url_for('category') }}">Category</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,34 +33,36 @@
 </div>
 
 <div class="container mt-3">
-<table class="table table-sm table-condensed table-striped">
+<table class="table table-sm table-condensed table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">S.No</th>
-      <th scope="col">Product</th>
-      <th scope="col">Price</th>
-      <th scope="col">Discount</th>
-        <th scope="col">Brand</th>
-      <th scope="col">Images</th>
+      <th scope="col">Name</th>
       <th scope="col">Edit</th>
       <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
-  {% for product in products %}
+  {% if brands %}
+  {% for brand in brands %}
     <tr>
       <th scope="row">{{loop.index}}</th>
-      <td>{{product.name}}</td>
-      <td>{{product.price}}</td>
-      <td>{{product.discount}}</td>
-        <td>{{product.brand.name}}</td>
-      <td>
-          <img src="{{url_for('static', filename= 'images/' + product.image_1)}}" width="50" height="50">
-      </td>
-      <td>Edit</td>
-        <td>Delete</td>
+      <td>{{brand.name}}</td>
+      <td><a href="" class = "btn btn-sm btn-outline-info" >Edit</a></td>
+       <td><a href="" class = "btn btn-sm btn-outline-danger">Delete</a></td>
     </tr>
   {% endfor%}
+  {% else %}
+    {% for catgory in categories %}
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{catgory.name}}</td>
+      <td><a href="" class = "btn btn-sm btn-outline-info" >Edit</a></td>
+       <td><a href="" class = "btn btn-sm btn-outline-danger">Delete</a></td>
+    </tr>
+  {% endfor%}
+
+  {% endif %}
   </tbody>
 </table>
 </div>
