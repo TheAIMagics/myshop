@@ -19,6 +19,16 @@ def addbrand():
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html', brands = 'brands')
 
+@app.route('/updatebrand/<int:id>',methods=['GET','POST'])
+def updatebrand(id):
+    updatebrand = Brand.query.get_or_404(id)
+    brand = request.form.get('brand')
+    if request.method =="POST":
+        updatebrand.name = brand
+        flash(f'The brand {updatebrand.name} was changed to {brand}','success')
+        db.session.commit()
+        return redirect(url_for('brands'))
+    return render_template('products/updatebrand.html', title='UPdate brand',brands='brands',updatebrand=updatebrand)
 
 @app.route('/addcategory', methods = ['GET', 'POST'])
 def addcategory():
@@ -30,6 +40,17 @@ def addcategory():
         flash(f"Category {getcategory} added to your database",'success')
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html')
+
+@app.route('/updatecategory/<int:id>',methods=['GET','POST'])
+def updatecategory(id):
+    updatecategory = Category.query.get_or_404(id)
+    category = request.form.get('category')
+    if request.method =="POST":
+        updatecategory.name = category
+        flash(f'The brand {updatecategory.name} was changed to {category}','success')
+        db.session.commit()
+        return redirect(url_for('category'))
+    return render_template('products/updatebrand.html', title='UPdate brand',updatecategory=updatecategory)
 
 @app.route('/addproduct', methods = ['GET', 'POST'])
 def addproduct():

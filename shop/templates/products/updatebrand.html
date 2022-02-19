@@ -11,12 +11,14 @@
                 <form action="" method="POST">
                     <input type="text" name="brand" class="form-control" placeholder="Enter Brand Name" value="{{updatebrand.name}}">
                     <button type="'submit" name="Update Brand" class="btn btn-primary mt-2">Update Brand </button>
+                    <button  class="btn btn-warning mt-2" href="url_for('brands')">Cancel</button>
                 </form>
             {% else %}
                 <h1 class="text-center mt-5">Update Category</h1>
                 <form action="" method="POST">
-                    <input type="text" name="category" class="form-control" placeholder="Enter Category Name" value="{{updatebrand.name}}">
+                    <input type="text" name="category" class="form-control" placeholder="Enter Category Name" value="{{updatecategory.name}}">
                     <button type="'submit" name="Update Category" class="btn btn-primary mt-2">Update Category </button>
+                      <button  class="btn btn-warning mt-2" href="url_for('category')">Cancel</button>
                 </form>
             {% endif %}
         </div>
