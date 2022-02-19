@@ -16,6 +16,23 @@
             {{ render_field(form.price, class="form-control" ,placeholder="Enter Product Price ") }}
             {{ render_field(form.discount, class="form-control", placeholder="Enter Product Discount") }}
             {{ render_field(form.stock, class="form-control", placeholder="Enter Product Stock Amount") }}
+
+            <label for = "brand">Add Brand</label>
+            <select name = "brand" id = "brand" class="form-control" required>
+                <option value = "">Select Brand</option>
+                {% for brand in brands %}
+                <option value = "brand.id">{{brand.name}}</option>
+                {% endfor %}
+            </select>
+
+             <label for = "category">Add Category</label>
+            <select name = "category" id = "category" class="form-control" required>
+                <option value = "">Select Category</option>
+                {% for category in categories %}
+                <option value = "category.id">{{category.name}}</option>
+                {% endfor %}
+            </select>
+
             {{ render_field(form.colors, class="form-control", placeholder="Enter Colors") }}
             {{ render_field(form.description, class="form-control", placeholder="Enter Product Details",rows="10" ) }}
 
