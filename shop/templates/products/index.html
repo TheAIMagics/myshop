@@ -24,6 +24,17 @@
                   {% endfor %}
               </ul>
             </li>
+
+                <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for category in categories %}
+                     <li><a class="dropdown-item" href="{{url_for('get_category', id = category.id)}}">{{category.name}}</a></li>
+                  {% endfor %}
+              </ul>
+            </li>
             <li class="nav-item">
               <a class="nav-link disabled">Disabled</a>
             </li>
@@ -51,6 +62,27 @@
                       {% endif %}
                     <h5 class="text-center">{{ b.name }}</h5>
                     <p class="text-center">{{ b.price }}</p>
+                  </div>
+                    <div class="card-footer text-center">
+                      <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
+
+                      <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
+                    </div>
+             </div>
+        </div>
+        {% endfor %}
+
+        {% elif category%}
+        {% for cat in category %}
+         <div class="col-md-3 mt-3 ">
+            <div class="card">
+                    <img src="{{ url_for('static', filename = "images/" + cat.image_1) }}" alt="{{ cat.name }}" class="card-img-top" height:"120">
+                  <div class="card-body">
+                      {% if cat.discount > 0 %}
+                        <h5 style="text-shadow:1px 1px 2px; color:#f00; transform:rotate(-15deg) ; position:absolute; top:  5%; left:20%" >Discount {{cat.discount}}%</h5>
+                      {% endif %}
+                    <h5 class="text-center">{{ cat.name }}</h5>
+                    <p class="text-center">{{ cat.price }}</p>
                   </div>
                     <div class="card-footer text-center">
                       <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
