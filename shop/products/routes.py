@@ -7,7 +7,8 @@ from .forms import AddproductsForm
 
 @app.route('/')
 def home():
-    return "Home Page"
+    products = Addproduct.query.filter(Addproduct.stock > 0)
+    return render_template('products/index.html', products = products)
 
 @app.route('/addbrand', methods = ['GET', 'POST'])
 def addbrand():
@@ -159,3 +160,21 @@ def updateproduct(id):
     form.colors.data = product.colors
     return render_template('products/updateproduct.html', title = 'Update Product', form = form,brands = brands, categories=categories,
                            product = product)
+
+@app.route('/deleteproduct/<int:id>',methods=['GET','POST'])
+def deleteproduct(id):
+    product = Addproduct.query.get_or_404(id)
+    if request.method == 'POST':
+        try:
+            os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_1))
+            os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_2))
+            os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_3))
+        except Exception as e:
+            print(e)
+
+        db.session.delete(product)
+        db.session.commit()
+        flash(f'The Product {product.name} deleted successfully', 'success')
+        return redirect(url_for('admin'))
+    flash(f"The Product {product.name} can't be  deleted from your database", "warning")
+    return redirect(url_for('admin'))
