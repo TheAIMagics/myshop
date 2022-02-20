@@ -10,19 +10,18 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="/">All products</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                Brands
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  {% for brand in brands %}
+                     <li><a class="dropdown-item" href="{{url_for('get_brand', id = brand.id)}}">{{brand.name}}</a></li>
+                  {% endfor %}
               </ul>
             </li>
             <li class="nav-item">
@@ -41,6 +40,29 @@
 
 <div class="container">
     <div class="row">
+        {% if brand %}
+         {% for b in brand%}
+        <div class="col-md-3 mt-3 ">
+            <div class="card">
+                    <img src="{{ url_for('static', filename = "images/" + b.image_1) }}" alt="{{ b.name }}" class="card-img-top" height:"120">
+                  <div class="card-body">
+                      {% if b.discount > 0 %}
+                        <h5 style="text-shadow:1px 1px 2px; color:#f00; transform:rotate(-15deg) ; position:absolute; top:  5%; left:20%" >Discount {{b.discount}}%</h5>
+                      {% endif %}
+                    <h5 class="text-center">{{ b.name }}</h5>
+                    <p class="text-center">{{ b.price }}</p>
+                  </div>
+                    <div class="card-footer text-center">
+                      <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
+
+                      <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
+                    </div>
+             </div>
+        </div>
+        {% endfor %}
+
+        {% else%}
+
         {% for product in products%}
         <div class="col-md-3 mt-3 ">
             <div class="card">
@@ -52,15 +74,15 @@
                     <h5 class="text-center">{{ product.name }}</h5>
                     <p class="text-center">{{ product.price }}</p>
                   </div>
-              <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-                <div class="card-footer text-center">
-                  <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
+                    <div class="card-footer text-center">
+                      <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
 
-                  <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
-                </div>
+                      <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
+                    </div>
              </div>
         </div>
         {% endfor %}
+        {% endif%}
     </div>
 </div>
 
