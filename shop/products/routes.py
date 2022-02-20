@@ -31,6 +31,20 @@ def updatebrand(id):
         return redirect(url_for('brands'))
     return render_template('products/updatebrand.html', title='UPdate brand',brands='brands',updatebrand=updatebrand)
 
+@app.route('/deletebrand/<int:id>',methods=['GET','POST'])
+def deletebrand(id):
+    brand = Brand.query.get_or_404(id)
+    try:
+        if request.method == 'POST':
+            db.session.delete(brand)
+            db.session.commit()
+            flash(f'The brand {brand.name} deleted successfully', 'success')
+            return redirect(url_for('admin'))
+    except:
+        flash(f"The brand {brand.name} can't be  deleted from your database", "warning")
+        return redirect(url_for('admin'))
+
+
 @app.route('/addcategory', methods = ['GET', 'POST'])
 def addcategory():
     if request.method == "POST":
@@ -52,6 +66,19 @@ def updatecategory(id):
         db.session.commit()
         return redirect(url_for('category'))
     return render_template('products/updatebrand.html', title='UPdate brand',updatecategory=updatecategory)
+
+@app.route('/deletecatgory/<int:id>',methods=['GET','POST'])
+def deletecatgory(id):
+    category = Category.query.get_or_404(id)
+    try:
+        if request.method == 'POST':
+            db.session.delete(category)
+            db.session.commit()
+            flash(f'The Category {category.name} deleted successfully', 'success')
+            return redirect(url_for('admin'))
+    except:
+        flash(f"The Category {category.name} can't be  deleted from your database", "warning")
+        return redirect(url_for('admin'))
 
 @app.route('/addproduct', methods = ['GET', 'POST'])
 def addproduct():
