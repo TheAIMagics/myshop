@@ -64,7 +64,7 @@
                     <p class="text-center">{{ b.price }}</p>
                   </div>
                     <div class="card-footer text-center">
-                      <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
+                      <a href="{{ url_for('single_page', id = b.id) }}" class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</a>
 
                       <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
                     </div>
@@ -109,7 +109,7 @@
                     <p class="text-center">{{ cat.price }}</p>
                   </div>
                     <div class="card-footer text-center">
-                      <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
+                      <a href="{{ url_for('single_page', id = cat.id) }}" class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</a>
 
                       <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
                     </div>
@@ -155,7 +155,7 @@
                     <p class="text-center">{{ product.price }}</p>
                   </div>
                     <div class="card-footer text-center">
-                      <button class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</button>
+                      <a href="{{ url_for('single_page', id = product.id) }}" class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</a>
                       <button class="btn btn-sm btn-warning pull-right" type="button" id="toright">Add to cart</button>
                     </div>
              </div>
