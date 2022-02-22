@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+            <th>Subtotal</th>
+            <th>Update</th>
+            <th>Delete</th>
+            </thead>
+            <tbody>
+            {% for key, product in session['Shoppingcart'].items() %}
+            {% set discount = (product.discount/100) * product.price|float %}
+            <tr>
+                <td>{{loop.index}}</td>
+                 <td>{{product.name}}</td>
+                 <td>{{product.colors}}</td>
+                 <td>{{product.price}}</td>
+                 <td>{{product.quantity}}</td>
+                {% if product.discount >0 %}
+                <td>{{product.discount}}% &nbsp is  {{discount }} </td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                    {% set subtotal = product.quantity * product.price %}
+                <td>{{ subtotal|float - discount|float }}</td>
+                 <td><a href="">update</td>
+                 <td><a href="">delete</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td><a href="/">Continue Shopping</a></td>
+                <td colspan="3"><h4>Tax:{{tax}}</h4></td>
+                <td colspan="4"><h4>Grand Total : {{grandtotal}}</h4></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content%}

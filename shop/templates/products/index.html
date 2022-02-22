@@ -36,7 +36,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href = "#">Cart({{session['Shoppingcart']|length}})</a>
+              <a class="nav-link " href = "{{ url_for('getCart') }}" >Cart({{session['Shoppingcart']|length}})</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -66,7 +66,7 @@
                     <div class="card-footer text-center">
                       <a href="{{ url_for('single_page', id = b.id) }}" class="btn btn-sm btn-primary pull-left" type="button" id="toleft">Details</a>
 
-                      <form action="{{url_for('AddCart')}}" method="post">
+                      <form action="{{url_for('AddCart')}}" method="POST">
                           <input type="hidden" name="product_id" value="{{b.id}}">
                           <button type="submit" class="btn btn-sm btn-warning float-right">Add to Cart</button>
                           <input type="hidden" name="quantity" value="1" min="1" max="20">

@@ -10,7 +10,7 @@ def MergeDicts(dict1, dict2):
     else:
         return False
 
-@app.route('/addcart', methods=['POST'])
+@app.route('/addcart', methods=['POST','GET'])
 def AddCart():
     try:
         product_id = request.form.get('product_id')
@@ -36,8 +36,21 @@ def AddCart():
                 session['Shoppingcart'] = DictItems
                 return redirect(request.referrer)
 
-
     except Exception as e:
         print(e)
     finally:
         return redirect(request.referrer)
+
+@app.route('/carts', methods=['POST','GET'])
+def getCart():
+    if 'Shoppingcart' not in session:
+        return redirect(request.referrer)
+    subtotal = 0
+    grandtotal = 0
+    for key, product in session['Shoppingcart'].items():
+        discount = (product['discount']/100)*float(product['price'])
+        subtotal += float(product['price']) * int(product['quantity'])
+        subtotal -= discount
+        tax = ("%.2f" % (.06 * float(subtotal)))
+        grandtotal = float("%.2f" % (1.06 * subtotal))
+    return render_template('products/carts.html', tax=tax, grandtotal=grandtotal)
