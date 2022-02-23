@@ -52,14 +52,19 @@
                  <td><a href="{{url_for('deletecart', id=key)}}" class="btn btn-danger btn-sm">delete</td>
             </tr>
             {% endfor %}
-            <tr>
-                <td></td>
-                <td colspan="4"><a href="/">Check out</a></td>
-                <td><h4>Tax : {{tax}}</h4></td>
-                <td colspan="4"><h4>Grand Total : {{grandtotal}}</h4></td>
-            </tr>
+
             </tbody>
         </table>
+            <table class="table table-sm">
+                <tr>
+                    <td><a href="/" class="btn btn-success">Check out</a></td>
+                    <td width="35%"></td>
+                    <td><h5>Tax : {{tax}}</h5></td>
+                    <td><h5>Grand Total : {{grandtotal}}</h5></td>
+                    <td><a href="{{url_for('clearcart')}}"  class="btn btn-danger btn-sm float-right mr-4">Clear Cart</a></td>
+
+                </tr>
+            </table>
         </div>
 
     </div>

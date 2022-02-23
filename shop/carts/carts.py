@@ -26,7 +26,6 @@ def AddCart():
                                       'color': color, 'quantity': quantity, 'image': product.image_1,
                                       'colors': product.colors}}
             if 'Shoppingcart' in session:
-                print(session['Shoppingcart'])
                 if product_id in session['Shoppingcart']:
                     for key, item in session['Shoppingcart'].items():
                         if int(key) == int(product_id):
@@ -71,14 +70,10 @@ def updatecart(code):
             session.modified = True
             for key, item in session['Shoppingcart'].items():
                 if int(key) == code:
-                    print(type(item['quantity']))
-                    print(type(item['price']))
-                    print("item=", item)
                     item['quantity'] = quantity
                     item['color'] = color
                     flash("Item is updated", 'success')
                     return redirect(url_for('getCart'))
-
         except Exception as e:
             print(e)
             return redirect(url_for('getCart'))
@@ -96,3 +91,11 @@ def deletecart(id):
     except Exception as e:
         print(e)
         return redirect(url_for('getCart'))
+
+@app.route('/clearcart', methods=['POST', 'GET'])
+def clearcart():
+    try:
+        session.pop('Shoppingcart',None)
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
