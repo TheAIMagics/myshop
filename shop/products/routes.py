@@ -1,7 +1,7 @@
 import secrets
 import os
 from flask import render_template, redirect, request, url_for,flash, session, current_app
-from shop import db, app, photos
+from shop import db, app, photos, search
 from .models import Brand, Category, Addproduct
 from .forms import AddproductsForm
 
@@ -9,6 +9,7 @@ from .forms import AddproductsForm
 def brands():
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     return brands
+
 def categories():
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
     return categories
@@ -18,6 +19,12 @@ def home():
     page = request.args.get('page',1,type=int)
     products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page = page, per_page=8)
     return render_template('products/index.html', products = products, brands = brands(),categories = categories())
+
+@app.route('/result')
+def result():
+    searchword = request.args.get('q')
+    products = Addproduct.query.msearch(searchword, fields=['name','description'], limit=3)
+    return render_template('products/result.html', products = products, brands = brands(),categories = categories())
 
 @app.route('/product/<int:id>')
 def single_page(id):

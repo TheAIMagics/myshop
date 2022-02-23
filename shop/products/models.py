@@ -2,6 +2,7 @@ from shop import db
 from datetime import datetime
 
 class Addproduct(db.Model):
+    __searchable__ = ['name','description']
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(80), nullable = False)
     price = db.Column(db.Integer, nullable = False )
