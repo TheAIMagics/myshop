@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% include 'navbar.html' %}
+
 <div class="container mt-4">
     {% include '_messages.html' %}
     <div class="row">
@@ -49,13 +49,13 @@
                     <td>{{ subtotal|float - discount|float }}</td>
                     <td><button type="submit" class="btn btn-info btn-sm">update</button></td>
                 </form>
-                 <td><a href="">delete</td>
+                 <td><a href="{{url_for('deletecart', id=key)}}" class="btn btn-danger btn-sm">delete</td>
             </tr>
             {% endfor %}
             <tr>
                 <td></td>
-                <td><a href="/">Continue Shopping</a></td>
-                <td colspan="3"><h4>Tax:{{tax}}</h4></td>
+                <td colspan="4"><a href="/">Check out</a></td>
+                <td><h4>Tax : {{tax}}</h4></td>
                 <td colspan="4"><h4>Grand Total : {{grandtotal}}</h4></td>
             </tr>
             </tbody>
